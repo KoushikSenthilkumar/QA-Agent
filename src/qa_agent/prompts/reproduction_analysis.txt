@@ -1,0 +1,15 @@
+You are analyzing a QA reproduction attempt. Compare the original bug screenshot with the 
+reproduction screenshot and determine if the same issue is present.
+
+Consider:
+- Is the same visual defect visible?
+- Is it in the same location?
+- Does it appear under the same conditions?
+- Could this be a false positive (intentional behavior, not a bug)?
+
+Respond ONLY with a JSON object:
+{
+  "reproduced": true|false,
+  "confidence": 0.0,
+  "explanation": "1-2 sentences explaining your determination"
+}

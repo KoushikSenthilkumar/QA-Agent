@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Error Test Site</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .error-badge { background: red; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Console Error Test Site</h1>
+    <p class="error-badge">INTENTIONALLY BROKEN</p>
+    <p>This page contains intentional JavaScript errors for QA agent testing.</p>
+
+    <h2>Features on this page</h2>
+    <ul>
+        <li>Uncaught TypeError</li>
+        <li>Failed fetch request</li>
+        <li>console.error call</li>
+        <li>Unhandled promise rejection</li>
+    </ul>
+
+    <button onclick="triggerError()">Trigger Error</button>
+    <a href="page2.html">Go to Page 2</a>
+
+    <script>
+        // BUG 1: Immediate console error on page load
+        console.error("Application initialization failed: config.json not found");
+
+        // BUG 2: Uncaught TypeError - accessing property on undefined
+        try {
+            const config = undefined;
+            const value = config.apiKey; // TypeError
+        } catch(e) {
+            // Swallowed intentionally but let the uncaught one fire
+        }
+
+        // BUG 3: Uncaught reference error (will show in console)
+        window.addEventListener('load', function() {
+            // This will fire as an uncaught error
+            setTimeout(() => {
+                undefinedFunction(); // ReferenceError
+            }, 500);
+        });
+
+        // BUG 4: Unhandled promise rejection
+        window.addEventListener('load', function() {
+            fetch('/api/does-not-exist')
+                .then(r => r.json())
+                .then(data => data.nothing.fails); // will fail
+        });
+
+        function triggerError() {
+            null.property; // Uncaught TypeError
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+# QA Agent — Default Configuration
+# CLI arguments override these values.
+# See ARCHITECTURE.md for field descriptions.
+
+target:
+  url: ""                    # Set via CLI: qa-agent <url>
+
+exploration:
+  max_pages: 20              # Max unique pages/URLs to visit
+  max_actions: 100           # Max total browser interactions
+  max_depth: 5               # Max click depth from root URL
+  timeout: 300               # Wall-clock timeout (seconds) for entire run
+  same_domain_only: true     # Restrict exploration to target domain
+
+viewports:
+  - name: "Desktop"
+    width: 1366
+    height: 768
+  - name: "Laptop"
+    width: 1280
+    height: 720
+  - name: "Tablet"
+    width: 768
+    height: 1024
+  - name: "Mobile"
+    width: 390
+    height: 844
+
+validators:
+  console: true
+  network: true
+  links: true
+  images: true
+  layout: true
+  accessibility: true
+  responsive: true
+  visual_ai: true
+
+vision:
+  provider: "mock"           # "openai" or "mock" — override with VLM_PROVIDER env var
+  model: "gpt-4o"
+  max_tokens: 2048
+  temperature: 0.1           # Low temperature for consistent, factual QA analysis
+  timeout: 30                # Per-request timeout (seconds)
+
+recording:
+  enabled: true
+  format: "webm"
+
+output:
+  reports_dir: "./reports"
+  screenshots_dir: "./screenshots"
+  recordings_dir: "./recordings"
+  logs_dir: "./logs"
+  baselines_dir: "./baselines"
+  report_formats:
+    - json
+    - html
+
+safety:
+  skip_destructive_actions: true    # Don't click delete/purchase/send buttons
+  destructive_keywords:
+    - "delete"
+    - "remove"
+    - "purchase"
+    - "buy now"
+    - "checkout"
+    - "pay"
+    - "send"
+    - "reset password"
+    - "cancel account"
+
+accessibility:
+  run_axe: true
+  axe_tags:                  # WCAG standard tags to check
+    - "wcag2a"
+    - "wcag2aa"
+    - "best-practice"

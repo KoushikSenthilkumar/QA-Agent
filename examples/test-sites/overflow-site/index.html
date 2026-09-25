@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overflow & Layout Bug Test Site</title>
+    <style>
+        body { font-family: sans-serif; margin: 0; padding: 20px; }
+
+        /* BUG 1: Fixed-width container that will overflow on mobile */
+        .fixed-container {
+            width: 1200px; /* Intentionally too wide */
+            background: #fee2e2;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid red;
+        }
+
+        /* BUG 2: Absolutely positioned element outside bounds */
+        .relative-parent {
+            position: relative;
+            height: 100px;
+            background: #fef3c7;
+            margin: 20px 0;
+        }
+        .overflow-child {
+            position: absolute;
+            right: -200px; /* Way outside parent */
+            top: 10px;
+            width: 300px;
+            background: #f97316;
+            color: white;
+            padding: 10px;
+        }
+
+        /* Normal content */
+        .normal { max-width: 100%; background: #d1fae5; padding: 20px; margin: 20px 0; }
+
+        /* BUG 3: Table without responsive wrapping */
+        table {
+            border-collapse: collapse;
+            min-width: 900px; /* Forces overflow on mobile */
+        }
+        td, th { border: 1px solid #ccc; padding: 12px; white-space: nowrap; }
+
+        /* BUG 4: Long unbreakable word */
+        .no-break {
+            background: #ede9fe;
+            padding: 20px;
+            margin: 20px 0;
+            width: 300px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <h1>Layout Overflow Test Site</h1>
+    <p style="background:red;color:white;padding:4px 8px;display:inline-block;border-radius:4px;font-size:12px">INTENTIONALLY BROKEN</p>
+
+    <h2>Bug 1: Fixed-width container (overflows on mobile)</h2>
+    <div class="fixed-container">
+        This container has a fixed width of 1200px, which will cause horizontal overflow
+        on any viewport smaller than 1200px wide.
+    </div>
+
+    <h2>Bug 2: Absolutely positioned element outside bounds</h2>
+    <div class="relative-parent">
+        <p>Parent container</p>
+        <div class="overflow-child">This element is positioned outside its parent</div>
+    </div>
+
+    <h2>Normal content (should not trigger overflow detection)</h2>
+    <div class="normal">
+        <p>This is properly responsive content that should fit any viewport.</p>
+    </div>
+
+    <h2>Bug 3: Non-responsive table</h2>
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Product Name</th><th>Description</th><th>Price</th><th>Stock</th><th>Category</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Widget Pro</td><td>A really great widget</td><td>$29.99</td><td>142</td><td>Widgets</td><td>Active</td></tr>
+            <tr><td>2</td><td>Super Gadget</td><td>Incredible gadget for professionals</td><td>$99.99</td><td>38</td><td>Gadgets</td><td>Active</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Bug 4: Text overflow</h2>
+    <div class="no-break">
+        <p>AVERYLONGWORDTHATHASNOBREAKSANDWILLCAUSEHORIZONTALOVERFLOWINTHISCONTAINERBECAUSEITISTOOLONG</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- BUG: Missing proper viewport meta — will cause mobile issues -->
+    <title>Responsive Bug Test Site</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: sans-serif; margin: 0; }
+
+        /* Navigation — BUG on mobile: doesn't collapse */
+        nav {
+            background: #1e40af;
+            padding: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            white-space: nowrap; /* BUG: Forces overflow on mobile */
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
+        }
+
+        /* Hero section */
+        .hero {
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        }
+        .hero h1 { font-size: 48px; }
+
+        /* BUG: Fixed-width cards that overflow on small screens */
+        .cards {
+            display: flex;
+            gap: 20px;
+            padding: 40px;
+        }
+        .card {
+            width: 280px; /* Fixed, not responsive */
+            flex-shrink: 0;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        /* BUG: Tiny button on mobile */
+        .cta-button {
+            background: #2563eb;
+            color: white;
+            padding: 4px 8px; /* Too small for touch */
+            border: none;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            padding: 40px;
+            /* BUG: Fixed wide grid that overflows on mobile */
+            display: grid;
+            grid-template-columns: 200px 200px 200px 200px;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p style="background:red;color:white;text-align:center;padding:8px;margin:0;font-size:12px">INTENTIONALLY BROKEN — Responsive Bug Test Site</p>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Products</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Support</a>
+        <a href="#">Documentation</a>
+        <a href="#">Pricing Plans</a>
+        <a href="#">Blog</a>
+    </nav>
+
+    <div class="hero">
+        <h1>Welcome to Our Platform</h1>
+        <p>This page has multiple responsive design bugs that should be detected by the QA agent.</p>
+        <button class="cta-button">Get Started Today →</button>
+    </div>
+
+    <section style="padding: 40px">
+        <h2>Our Products</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Starter Plan</h3>
+                <p>Perfect for small teams getting started with our platform.</p>
+                <button class="cta-button">Choose Plan</button>
+            </div>
+            <div class="card">
+                <h3>Professional Plan</h3>
+                <p>Advanced features for growing businesses and enterprises.</p>
+                <button class="cta-button">Choose Plan</button>
+            </div>
+            <div class="card">
+                <h3>Enterprise Plan</h3>
+                <p>Custom solutions for large organizations with specific needs.</p>
+                <button class="cta-button">Choose Plan</button>
+            </div>
+            <div class="card">
+                <h3>Agency Plan</h3>
+                <p>Manage multiple clients and projects from one dashboard.</p>
+                <button class="cta-button">Choose Plan</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div>
+            <h4>Company</h4>
+            <ul style="list-style:none;padding:0">
+                <li><a href="#" style="color:#9ca3af">About</a></li>
+                <li><a href="#" style="color:#9ca3af">Careers</a></li>
+                <li><a href="#" style="color:#9ca3af">Press</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Product</h4>
+            <ul style="list-style:none;padding:0">
+                <li><a href="#" style="color:#9ca3af">Features</a></li>
+                <li><a href="#" style="color:#9ca3af">Pricing</a></li>
+                <li><a href="#" style="color:#9ca3af">Changelog</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Resources</h4>
+            <ul style="list-style:none;padding:0">
+                <li><a href="#" style="color:#9ca3af">Documentation</a></li>
+                <li><a href="#" style="color:#9ca3af">API Reference</a></li>
+                <li><a href="#" style="color:#9ca3af">Community</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Legal</h4>
+            <ul style="list-style:none;padding:0">
+                <li><a href="#" style="color:#9ca3af">Privacy</a></li>
+                <li><a href="#" style="color:#9ca3af">Terms</a></li>
+                <li><a href="#" style="color:#9ca3af">Cookies</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>

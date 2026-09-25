@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html><!-- BUG: Missing lang attribute -->
+<head>
+    <meta charset="UTF-8">
+    <title>Accessibility Bug Test Site</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+
+        /* BUG: Very low contrast text */
+        .low-contrast { color: #cccccc; background: white; }
+
+        /* BUG: Focus outline removed */
+        *:focus { outline: none; }
+
+        .hidden-label { visibility: hidden; }
+    </style>
+</head>
+<body>
+    <p style="background:red;color:white;padding:4px 8px;border-radius:4px;font-size:12px;display:inline-block">INTENTIONALLY BROKEN — Accessibility Bug Test Site</p>
+
+    <!-- BUG: Skipped heading level (h1 → h3, skipping h2) -->
+    <h1>Accessibility Test Page</h1>
+    <h3>Login Section</h3><!-- BUG: Skipped h2 -->
+
+    <!-- BUG: Form inputs without labels -->
+    <form>
+        <!-- BUG: No label for input -->
+        <input type="text" placeholder="Username" id="username">
+        <input type="password" placeholder="Password" id="password">
+
+        <!-- BUG: Button with no accessible name -->
+        <button type="submit"></button>
+
+        <!-- Good example for contrast -->
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email">
+    </form>
+
+    <h3>Images</h3><!-- BUG: Continued skipped hierarchy -->
+    <!-- BUG: Decorative images without empty alt / informational without alt -->
+    <img src="https://picsum.photos/200/100?random=5"><!-- No alt -->
+    <img src="https://picsum.photos/200/100?random=6" alt=""><!-- Decorative OK -->
+
+    <h3>Interactive Elements</h3>
+    <!-- BUG: Click handlers on non-interactive elements (no keyboard support) -->
+    <div onclick="alert('clicked')" style="cursor:pointer;padding:10px;background:#e5e7eb;margin:8px 0">
+        Click me (div with onclick — not keyboard accessible)
+    </div>
+
+    <!-- BUG: Links with non-descriptive text -->
+    <p>To read more about our products, <a href="#">click here</a>.</p>
+    <p>For support, <a href="#">click here</a>.</p>
+    <p>For legal information, <a href="#">click here</a>.</p>
+
+    <!-- BUG: Low contrast text -->
+    <p class="low-contrast">This text has very low contrast and is hard to read.</p>
+
+    <!-- BUG: Duplicate IDs -->
+    <div id="main-content">First element with id="main-content"</div>
+    <div id="main-content">Second element with id="main-content" (DUPLICATE)</div>
+
+    <!-- BUG: Auto-playing media -->
+    <video autoplay muted loop style="width:100%;max-width:400px">
+        <source src="nonexistent.mp4" type="video/mp4">
+    </video>
+
+    <script>
+        // BUG: Focus trap not managed properly for modal
+        document.querySelector('button[type=submit]').addEventListener('click', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>

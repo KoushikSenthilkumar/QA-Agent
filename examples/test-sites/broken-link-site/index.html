@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broken Link Test Site</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        a { display: block; margin: 8px 0; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        a.broken { color: red; border-color: red; }
+        .error-badge { background: red; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Broken Link Test Site</h1>
+    <p class="error-badge">INTENTIONALLY BROKEN</p>
+
+    <h2>Navigation Links</h2>
+
+    <!-- GOOD link -->
+    <a href="https://example.com">Good external link — example.com</a>
+
+    <!-- BUG 1: 404 on local page -->
+    <a href="/page-does-not-exist" class="broken">Broken local link (404)</a>
+
+    <!-- BUG 2: Another 404 -->
+    <a href="/products/deleted-item-12345" class="broken">Deleted product page</a>
+
+    <!-- BUG 3: External broken domain -->
+    <a href="https://this-site-does-not-exist-qa-test-12345.com" class="broken">Broken external domain</a>
+
+    <!-- BUG 4: Typo in URL -->
+    <a href="htps://example.com/typo" class="broken">Typo in protocol</a>
+
+    <h2>Internal Navigation</h2>
+    <a href="about.html">About Us (file doesn't exist)</a>
+    <a href="contact.html">Contact (file doesn't exist)</a>
+    <a href="index.html">Home (this page — good)</a>
+
+    <h2>Anchors</h2>
+    <!-- BUG 5: Anchor to non-existent section -->
+    <a href="#section-that-does-not-exist">Jump to missing section</a>
+    <a href="#existing-section">Jump to existing section</a>
+
+    <div id="existing-section">
+        <h3>This section exists</h3>
+        <p>The anchor above should scroll here correctly.</p>
+    </div>
+</body>
+</html>

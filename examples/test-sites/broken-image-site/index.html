@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broken Image Test Site</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .image-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 20px 0; }
+        .image-item { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        img { max-width: 100%; height: 150px; object-fit: cover; }
+        .error-badge { background: red; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Broken Image Test Site</h1>
+    <p class="error-badge">INTENTIONALLY BROKEN</p>
+
+    <div class="image-grid">
+        <!-- GOOD image (will load) -->
+        <div class="image-item">
+            <img src="https://picsum.photos/200/150?random=1" alt="A random test image">
+            <p>Good image</p>
+        </div>
+
+        <!-- BUG 1: Non-existent image URL -->
+        <div class="image-item">
+            <img src="/images/does-not-exist.jpg" alt="Missing product image">
+            <p>Broken src</p>
+        </div>
+
+        <!-- BUG 2: No alt attribute -->
+        <div class="image-item">
+            <img src="https://picsum.photos/200/150?random=2">
+            <p>No alt attribute</p>
+        </div>
+
+        <!-- BUG 3: Empty src -->
+        <div class="image-item">
+            <img src="" alt="Empty source">
+            <p>Empty src</p>
+        </div>
+
+        <!-- BUG 4: Broken external URL -->
+        <div class="image-item">
+            <img src="https://this-domain-does-not-exist-qa-test.com/image.png" alt="External broken image">
+            <p>Broken external</p>
+        </div>
+
+        <!-- BUG 5: Data URI that's malformed -->
+        <div class="image-item">
+            <img src="data:image/png;base64,INVALIDDATAHERE" alt="Malformed data URI">
+            <p>Malformed data URI</p>
+        </div>
+    </div>
+
+    <h2>Additional missing assets</h2>
+    <p>These images are also missing:</p>
+    <img src="/assets/logo.png"><!-- BUG: no alt, broken src -->
+    <img src="/static/hero-banner.jpg" alt="Hero banner"><!-- BUG: broken src -->
+</body>
+</html>
